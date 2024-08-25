@@ -3,6 +3,6 @@ import { Router, Response, Request } from "express";
 
 const router = Router();
 
-router.post("/cidades", cidadesControllers.create);
+router.post("/", cidadesControllers.bodyValidation, cidadesControllers.create);
 
 export default router;

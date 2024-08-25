@@ -1,4 +1,6 @@
 import express from "express";
+import "./shared/services/TranslationYup";
+
 import cidadeRoutes from "./routes/cidades";
 import pessoasRoutes from "./routes/pessoas";
 
