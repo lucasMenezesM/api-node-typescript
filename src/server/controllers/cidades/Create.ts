@@ -11,8 +11,6 @@ interface IQuery {
   filter: string;
 }
 
-// let cidadeSchema: ObjectSchema<Icidade> = ;
-
 export const bodyValidation = validation((getSchema) => ({
   body: getSchema<Icidade>(
     object({
@@ -48,6 +46,6 @@ export const bodyValidation = validation((getSchema) => ({
 //   }
 // };
 
-export const create = async (req: Request<{}, {}, Icidade>, res: Response): Promise<Response> => {
+export const create = (req: Request<{}, {}, Icidade>, res: Response): Response => {
   return res.json({ cidade: req.body });
 };
