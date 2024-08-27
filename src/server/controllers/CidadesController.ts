@@ -37,7 +37,7 @@ export default class CidadesController {
    */
   public create(): RequestHandler {
     return (req: Request<{}, {}, validation.Icidade>, res: Response): Response => {
-      return res.status(StatusCodes.CREATED).json({ cidade: req.body });
+      return res.status(StatusCodes.CREATED).json(1);
     };
   }
 
@@ -47,7 +47,10 @@ export default class CidadesController {
    */
   public getAllCidades(): RequestHandler {
     return (req: Request<{}, {}, {}, validation.IQueryProps>, res: Response): Response => {
-      return res.json(req.query);
+      res.setHeader("access-control-expose-headers", "x-total-count");
+      res.setHeader("x-total-count", 1);
+
+      return res.json({ cidades: [{ id: 1, nome: "Rio de Janeiro" }] });
     };
   }
 
@@ -59,7 +62,16 @@ export default class CidadesController {
     return (req: Request<validation.IparamsId>, res: Response): Response => {
       console.log("Get by id route");
       console.log(req.params);
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Not implemented yet" });
+
+      if (Number(req.params.id) >= 999999) {
+        return res.status(StatusCodes.NOT_FOUND).json({
+          errors: {
+            default: "Id não encontrado",
+          },
+        });
+      }
+
+      return res.json({ cidades: { id: 1, nome: "Rio de Janeiro" } });
     };
   }
 
@@ -75,7 +87,7 @@ export default class CidadesController {
       console.log("Update Route");
       console.log(req.body);
       console.log(req.params);
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Not implemented yet" });
+      return res.status(StatusCodes.OK).json({ cidade: "Not implemented yet" });
     };
   }
 
@@ -83,7 +95,15 @@ export default class CidadesController {
     return (req: Request<validation.IparamsId>, res: Response): Response => {
       console.log("Delete route");
       console.log(req.params);
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Not implemented yet" });
+
+      if (req.params.id && Number(req.params.id) >= 999999) {
+        return res.status(StatusCodes.NOT_FOUND).json({
+          errors: {
+            default: "Id não encontrado",
+          },
+        });
+      }
+      return res.status(StatusCodes.NO_CONTENT).json({});
     };
   }
 }

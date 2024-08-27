@@ -38,7 +38,7 @@ const validation: TValidadeFunction = (getAllSchemas): RequestHandler => async (
   });
 
   if (Object.entries(errorResults).length > 0) 
-    return res.status(StatusCodes.BAD_REQUEST).json({ error: errorResults });
+    return res.status(StatusCodes.BAD_REQUEST).json({ errors: errorResults });
     
   return next();
 };
